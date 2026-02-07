@@ -60,9 +60,12 @@
 	            <span id="chapter-title"></span>
 	        </div>
 	        <div id="title-controls">
+	            {% if kosync_progress is not none %}
+	            <a id="kosync-jump" title="{{_('Jump to KOReader position')}} ({{ kosync_progress|round(1) }}%)" style="cursor:pointer;font-weight:bold;font-size:11px;width:auto;overflow:visible;vertical-align:top;">KO</a>
+	            {% endif %}
 	            <a id="bookmark" class="icon-bookmark-empty">Bookmark</a>
 	            <a id="setting" class="icon-cog">Settings</a>
-	            <a id="fullscreen" class="icon-resize-full">Fullscreen</a>            
+	            <a id="fullscreen" class="icon-resize-full">Fullscreen</a>
 	        </div>
 	    </div>
 

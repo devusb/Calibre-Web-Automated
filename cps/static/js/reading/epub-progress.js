@@ -61,12 +61,32 @@ window.addEventListener('locationchange',()=>{
 var epub=ePub(calibre.bookUrl)
 
 let progressDiv=document.getElementById("progress");
+var locationsReady = false;
+
+// KOReader jump button handler
+document.addEventListener("DOMContentLoaded", function() {
+    let kosyncBtn = document.getElementById("kosync-jump");
+    if (kosyncBtn && window.calibre.kosyncPercent !== null && window.calibre.kosyncPercent !== undefined) {
+        kosyncBtn.addEventListener("click", function() {
+            if (!locationsReady) {
+                alert("Book locations not ready yet. Please wait a moment and try again.");
+                return;
+            }
+            let percentage = parseFloat(window.calibre.kosyncPercent) / 100;
+            let cfi = epub.locations.cfiFromPercentage(percentage);
+            if (cfi && reader && reader.rendition) {
+                reader.rendition.display(cfi);
+            }
+        });
+    }
+});
 
 qFinished(()=>{
     if (!epub || !epub.locations) {
         return;
     }
     epub.locations.generate().then(()=> {
+        locationsReady = true;
         // Restore progress from localStorage if available
         if (window.calibre && window.calibre.bookUrl && reader && reader.rendition) {
             let bookKey = window.calibre.bookUrl;
