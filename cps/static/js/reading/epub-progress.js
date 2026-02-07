@@ -51,8 +51,7 @@ window.addEventListener('locationchange',()=>{
         progressDiv.textContent=newPos+"%";
     }
     // Save progress to localStorage per book
-    if (window.calibre && window.calibre.bookUrl) {
-        // Use bookUrl as a unique key, or use bookid if available
+    if (locationsReady && window.calibre && window.calibre.bookUrl) {
         let bookKey = window.calibre.bookUrl;
         localStorage.setItem("calibre.reader.progress." + bookKey, newPos);
     }
